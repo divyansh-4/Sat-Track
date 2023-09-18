@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import SatellitePosition from './components/SatellitePosition';
 function App() {
