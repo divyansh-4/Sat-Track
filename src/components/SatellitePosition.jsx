@@ -14,7 +14,7 @@ const ISS_TLE =
 function SatellitePosition() {
   const [position, setPosition] = useState(null);
   const [orbitPoints, setOrbit] = useState([]);
-  const [satellitePoints, setSatellites] = useState([]);
+  const [antennaPoints, setAntenna] = useState([]);
   const [date, setDate] = useState(new Date());
 
   useEffect(() => {
@@ -23,14 +23,14 @@ function SatellitePosition() {
   }, []);
 
   useEffect(() => {
-    const satellites = [];
+    const antennae = [];
 
     for (let i = 0; i < 15; i++) {
       const latitude = Math.random() * 180 - 90;
       const longitude = Math.random() * 360 - 180;
-      satellites.push({ latitude, longitude });
+      antennae.push({ latitude, longitude });
     }
-    setSatellites(satellites);
+    setAntenna(antennae);
   }, []);
 
   useEffect(() => {
@@ -46,7 +46,7 @@ function SatellitePosition() {
       setPosition(satellitePositions);
     };
 
-    calculatePosition(date); // Calculate the initial position
+    calculatePosition(date); 
 
     const calculatedPositions = [];
     const startDate = new Date();
@@ -88,7 +88,7 @@ function SatellitePosition() {
           latitude={parseFloat(position.latitude * (180 / Math.PI))}
           longitude={parseFloat(position.longitude * (180 / Math.PI))}
           orbit={orbitPoints}
-          satellites={satellitePoints}
+          antennas={antennaPoints}
         />
       )}
     </div>
