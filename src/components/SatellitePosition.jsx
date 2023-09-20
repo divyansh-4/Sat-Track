@@ -14,6 +14,24 @@ const ISS_TLE =
 function SatellitePosition() {
   const [position, setPosition] = useState(null);
   const [orbitPoints, setOrbit] = useState([]);
+  const [satellitePoints, setSatellites] = useState([]);
+  const [date, setDate] = useState(new Date());
+
+  useEffect(() => {
+    const interval = setInterval(() => setDate(new Date()), 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    const satellites = [];
+
+    for (let i = 0; i < 15; i++) {
+      const latitude = Math.random() * 180 - 90;
+      const longitude = Math.random() * 360 - 180;
+      satellites.push({ latitude, longitude });
+    }
+    setSatellites(satellites);
+  }, []);
 
   useEffect(() => {
     const satrec = twoline2satrec(
@@ -21,10 +39,20 @@ function SatellitePosition() {
       ISS_TLE.split('\n')[1].trim()
     );
 
+    const calculatePosition = (newDate) => {
+      const positionAndVelocity = propagate(satrec, newDate);
+      const gmst = gstime(newDate);
+      const satellitePositions = eciToGeodetic(positionAndVelocity.position, gmst);
+      setPosition(satellitePositions);
+    };
+
+    calculatePosition(date); // Calculate the initial position
+
     const calculatedPositions = [];
     const startDate = new Date();
+
     for (let i = 0; i < 10; i++) {
-      const date = new Date(startDate.getTime() - i * 2 * 60 * 1000); 
+      const date = new Date(startDate.getTime() - i * 1 * 60 * 1000);
 
       const positionAndVelocity = propagate(satrec, date);
       const gmst = gstime(date);
@@ -36,8 +64,8 @@ function SatellitePosition() {
       });
     }
 
-    for (let i = 0; i < 49; i++) {
-      const date = new Date(startDate.getTime() + i * 2 * 60 * 1000); 
+    for (let i = 0; i < 662; i++) {
+      const date = new Date(startDate.getTime() + i * 1 * 8 * 1000);
 
       const positionAndVelocity = propagate(satrec, date);
       const gmst = gstime(date);
@@ -49,13 +77,8 @@ function SatellitePosition() {
       });
     }
 
-    const positionAndVelocity = propagate(satrec, startDate);
-    const gmst = gstime(startDate);
-    const satellitePositions = eciToGeodetic(positionAndVelocity.position, gmst);
-
-    setPosition(satellitePositions);
     setOrbit(calculatedPositions);
-  }, []);
+  }, [date]);
 
   return (
     <div>
@@ -65,6 +88,7 @@ function SatellitePosition() {
           latitude={parseFloat(position.latitude * (180 / Math.PI))}
           longitude={parseFloat(position.longitude * (180 / Math.PI))}
           orbit={orbitPoints}
+          satellites={satellitePoints}
         />
       )}
     </div>
