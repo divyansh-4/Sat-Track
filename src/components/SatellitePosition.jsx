@@ -7,20 +7,16 @@ import {
 } from 'satellite.js';
 import SatelliteMap from './SatelliteMap';
 
-const ISS_TLE =
-  `1 25544U 98067A   23261.37754304  .00014387  00000-0  26521-3 0  9999
-   2 25544  51.6416 226.9153 0005862  31.7166 102.3637 15.49379141416241`;
-
-function SatellitePosition() {
+function SatellitePosition({TLE}) {
   const [position, setPosition] = useState(null);
   const [orbitPoints, setOrbit] = useState([]);
   const [antennaPoints, setAntenna] = useState([]);
   const [date, setDate] = useState(new Date());
 
-  useEffect(() => {
-    const interval = setInterval(() => setDate(new Date()), 1000);
-    return () => clearInterval(interval);
-  }, []);
+  // useEffect(() => {
+  //   const interval = setInterval(() => setDate(new Date()), 1000);
+  //   return () => clearInterval(interval);
+  // }, []);
 
   useEffect(() => {
     const antennae = [];
@@ -35,8 +31,8 @@ function SatellitePosition() {
 
   useEffect(() => {
     const satrec = twoline2satrec(
-      ISS_TLE.split('\n')[0].trim(),
-      ISS_TLE.split('\n')[1].trim()
+      TLE.split('\n')[0].trim(),
+      TLE.split('\n')[1].trim()
     );
 
     const calculatePosition = (newDate) => {
