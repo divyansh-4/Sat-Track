@@ -2,42 +2,42 @@ import React from 'react';
 import { useMemo } from 'react';
 import issImage from './iss.png';
 import antenna from './antenna.png';
-import { GoogleMap, useLoadScript, MarkerF, Polyline, PolylineF } from '@react-google-maps/api';
+import { GoogleMap, useLoadScript, MarkerF, PolylineF } from '@react-google-maps/api';
 
 function SatelliteMap({ latitude, longitude, orbit, antennas }) {
-  const center = useMemo(() => ({ lat: 0, lng: 0 }), []);
-  const { isLoaded } = useLoadScript({ googleMapsApiKey: process.env.GOOGLE_API_KEY || "APIKEY" });
+    const center = useMemo(() => ({ lat: 0, lng: 0 }), []);
+    const { isLoaded } = useLoadScript({ googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY || "APIKEY" });
 
-  if (!isLoaded) return <div>Loading...</div>;
+    if (!isLoaded) return <div>Loading...</div>;
 
-  // Define the anchor point for the custom marker image
-  const icon = {
-    url: issImage,
-    scaledSize: new window.google.maps.Size(76, 76), // Adjust the size as needed
-    anchor: new window.google.maps.Point(38, 38), // Center the marker at the specified point
-  };
-  const icon2 = {
-    url: antenna,
-    scaledSize: new window.google.maps.Size(76, 76), // Adjust the size as needed
-    anchor: new window.google.maps.Point(38, 38), // Center the marker at the specified point
-  };
+    // Define the anchor point for the custom marker image
+    const icon = {
+        url: issImage,
+        scaledSize: new window.google.maps.Size(76, 76), // Adjust the size as needed
+        anchor: new window.google.maps.Point(38, 38), // Center the marker at the specified point
+    };
+    const icon2 = {
+        url: antenna,
+        scaledSize: new window.google.maps.Size(76, 76), // Adjust the size as needed
+        anchor: new window.google.maps.Point(38, 38), // Center the marker at the specified point
+    };
 
-  return (
-    <GoogleMap zoom={2.8} center={center} mapContainerClassName='map-container'>
-      <MarkerF position={{ lat: latitude, lng: longitude }} icon={icon} />
-      {antennas && antennas.map((point, index) => (
-        <MarkerF key={index} position={{ lat: point.latitude, lng: point.longitude }} icon={icon2} />
-      ))}
-      <PolylineF
-        path={orbit.map(point => ({ lat: point.latitude, lng: point.longitude }))}
-        options={{
-          strokeColor: '#FF0000', // Color of the line
-          strokeOpacity: 1.0, // Opacity of the line
-          strokeWeight: 2, // Width of the line
-        }}
-      />
-    </GoogleMap>
-  );
+    return (
+        <GoogleMap zoom={2.8} center={center} mapContainerClassName='map-container'>
+            <MarkerF position={{ lat: latitude, lng: longitude }} icon={icon} />
+            {antennas && antennas.map((point, index) => (
+                <MarkerF key={index} position={{ lat: point.latitude, lng: point.longitude }} icon={icon2} />
+            ))}
+            <PolylineF
+                path={orbit.map(point => ({ lat: point.latitude, lng: point.longitude }))}
+                options={{
+                    strokeColor: '#FF0000', // Color of the line
+                    strokeOpacity: 1.0, // Opacity of the line
+                    strokeWeight: 2, // Width of the line
+                }}
+            />
+        </GoogleMap>
+    );
 }
 
 export default SatelliteMap;
