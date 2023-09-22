@@ -13,10 +13,10 @@ function SatellitePosition({TLE}) {
   const [antennaPoints, setAntenna] = useState([]);
   const [date, setDate] = useState(new Date());
 
-  // useEffect(() => {
-  //   const interval = setInterval(() => setDate(new Date()), 1000);
-  //   return () => clearInterval(interval);
-  // }, []);
+  useEffect(() => {
+    const interval = setInterval(() => setDate(new Date()), 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     const antennae = [];
@@ -48,7 +48,7 @@ function SatellitePosition({TLE}) {
     const startDate = new Date();
 
     for (let i = 0; i < 10; i++) {
-      const date = new Date(startDate.getTime() - i * 1 * 60 * 1000);
+      const date = new Date(startDate.getTime() - i * 1 * 30 * 1000);
 
       const positionAndVelocity = propagate(satrec, date);
       const gmst = gstime(date);
