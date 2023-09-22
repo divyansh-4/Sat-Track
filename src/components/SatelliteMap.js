@@ -2,12 +2,12 @@ import React from 'react';
 import { useMemo } from 'react';
 import issImage from './iss.png';
 import antenna from './antenna.png';
-import { GoogleMap, useLoadScript, MarkerF, Polyline } from '@react-google-maps/api';
+import { GoogleMap, useLoadScript, MarkerF, Polyline, PolylineF } from '@react-google-maps/api';
 
 function SatelliteMap({ latitude, longitude, orbit, antennas }) {
   const center = useMemo(() => ({ lat: 0, lng: 0 }), []);
-  const { isLoaded } = useLoadScript({ googleMapsApiKey: "APIKEY" });
-  
+  const { isLoaded } = useLoadScript({ googleMapsApiKey: process.env.GOOGLE_API_KEY || "APIKEY" });
+
   if (!isLoaded) return <div>Loading...</div>;
 
   // Define the anchor point for the custom marker image
@@ -28,7 +28,7 @@ function SatelliteMap({ latitude, longitude, orbit, antennas }) {
       {antennas && antennas.map((point, index) => (
         <MarkerF key={index} position={{ lat: point.latitude, lng: point.longitude }} icon={icon2} />
       ))}
-      <Polyline
+      <PolylineF
         path={orbit.map(point => ({ lat: point.latitude, lng: point.longitude }))}
         options={{
           strokeColor: '#FF0000', // Color of the line
@@ -88,8 +88,8 @@ export default SatelliteMap;
 //           x="-25"
 //           y="-25"
 //           width="50px"
-//           height="50px"  
+//           height="50px"
 //           xlinkHref={issImage}
 //         />
 //       </Marker>
-//     </ComposableMap> 
+//     </ComposableMap>
