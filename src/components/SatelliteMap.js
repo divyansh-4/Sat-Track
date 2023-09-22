@@ -23,7 +23,7 @@ function SatelliteMap({ latitude, longitude, orbit, antennas }) {
     };
 
     return (
-        <GoogleMap zoom={2.8} center={center} mapContainerClassName='map-container'>
+        <GoogleMap zoom={2} center={center} mapContainerClassName='map-container'>
             <MarkerF position={{ lat: latitude, lng: longitude }} icon={icon} />
             {antennas && antennas.map((point, index) => (
                 <MarkerF key={index} position={{ lat: point.latitude, lng: point.longitude }} icon={icon2} />

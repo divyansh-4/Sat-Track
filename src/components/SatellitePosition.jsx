@@ -47,8 +47,8 @@ function SatellitePosition({TLE}) {
     const calculatedPositions = [];
     const startDate = new Date();
 
-    for (let i = 0; i < 10; i++) {
-      const date = new Date(startDate.getTime() - i * 1 * 30 * 1000);
+    for (let i = 39; i >-1; i--) {
+      const date = new Date(startDate.getTime() - i * 1 * 8* 1000);
 
       const positionAndVelocity = propagate(satrec, date);
       const gmst = gstime(date);
