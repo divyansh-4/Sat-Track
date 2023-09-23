@@ -6,7 +6,6 @@ const ISS_TLE =
 function App() {
   return (
     <div className="App">
-
       <SatellitePosition TLE={ISS_TLE}/>
     </div>
   );
