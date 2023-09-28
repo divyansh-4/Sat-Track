@@ -1,7 +1,7 @@
 import React from "react";
 import { useMemo } from "react";
-import issImage from "./iss.png";
-import antenna from "./antenna.png";
+import issImage from '../imgs/iss.png';
+import antenna from '../imgs/antenna.png';
 import {
   GoogleMap,
   useLoadScript,
