@@ -6,7 +6,7 @@ import {
   Marker,
 } from 'react-simple-maps';
 import issImage from '../imgs/iss.png';
-import sat from '../imgs/satellite.png';
+import antenna from '../imgs/antenna.png';
 
 const geoUrl =
   'https://raw.githubusercontent.com/deldersveld/topojson/master/world-countries-sans-antarctica.json';
@@ -40,7 +40,7 @@ function SatelliteMap({ latitude, longitude, orbit,antennas }) {
           y="-15"
           width="30px"
           height="30px"
-          xlinkHref={sat}
+          xlinkHref={antenna}
         />
         </Marker>
       ))}
