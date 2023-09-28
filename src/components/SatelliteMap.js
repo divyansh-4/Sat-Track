@@ -5,8 +5,8 @@ import {
   Geography,
   Marker,
 } from 'react-simple-maps';
-import issImage from './iss.png';
-import sat from './satellite.png';
+import issImage from '../imgs/iss.png';
+import sat from '../imgs/satellite.png';
 
 const geoUrl =
   'https://raw.githubusercontent.com/deldersveld/topojson/master/world-countries-sans-antarctica.json';
